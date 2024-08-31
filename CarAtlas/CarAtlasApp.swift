@@ -11,7 +11,13 @@ import SwiftUI
 struct CarAtlasApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            let apiClient = APIClient()
+            let remoteDataSource = CarRemoteDataSource(apiClient: apiClient)
+            let carRepository = CarRepositoryImpl(remoteDataSource: remoteDataSource)
+            let getCarsUseCase = GetCarsUseCase(repository: carRepository)
+            let viewModel = CarListViewModel(getCarMakesUseCases: getCarsUseCase)
+            
+            CarListView(viewModel: viewModel)
         }
     }
 }

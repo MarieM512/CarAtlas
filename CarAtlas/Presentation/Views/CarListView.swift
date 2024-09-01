@@ -9,11 +9,16 @@ import SwiftUI
 
 struct CarListView: View {
     @ObservedObject var viewModel: CarListViewModel
+    @EnvironmentObject var environment: AppEnvironment
     
     var body: some View {
         NavigationView {
             List(viewModel.carMakes) { carMakes in
-                Text(carMakes.name)
+                NavigationLink {
+                    CarModelsView(viewModel: CarModelsViewModel(carModels: [], getCarModelsUseCases: environment.getCarModelsUseCase), carName: carMakes.name.lowercased())
+                } label: {
+                    Text(carMakes.name)
+                }
             }
             .navigationTitle("Car Makes")
             .onAppear {

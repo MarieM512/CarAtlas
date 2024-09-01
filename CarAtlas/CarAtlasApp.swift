@@ -9,6 +9,7 @@ import SwiftUI
 
 @main
 struct CarAtlasApp: App {
+    @StateObject private var environment = AppEnvironment()
     var body: some Scene {
         WindowGroup {
             let apiClient = APIClient()
@@ -18,6 +19,7 @@ struct CarAtlasApp: App {
             let viewModel = CarListViewModel(getCarMakesUseCases: getCarsUseCase)
             
             CarListView(viewModel: viewModel)
+                .environmentObject(environment)
         }
     }
 }
